@@ -1,7 +1,7 @@
 import paddlehub as hub
 import pandas as pd
 
-model_list = ['senta_bow', 'senta_cnn', 'senta_gru', 'senta_lstm', 'senta_bilstm']
+model_list = ['senta_lstm']
 
 
 def test(model_name):
