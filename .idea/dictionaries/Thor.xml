@@ -1,12 +1,17 @@
 <component name="ProjectDictionaryState">
   <dictionary name="Thor">
     <words>
+      <w>bilstm</w>
       <w>conv</w>
       <w>convs</w>
       <w>cuda</w>
+      <w>finetune</w>
+      <w>finetuning</w>
       <w>logits</w>
       <w>lstm</w>
       <w>optim</w>
+      <w>paddlehub</w>
+      <w>pdparams</w>
       <w>pretrained</w>
       <w>senta</w>
       <w>sgns</w>

@@ -12,6 +12,7 @@ TRAIN_DIR_PATH = "train.csv"
 from paddle.nn import LSTM, Embedding, Dropout, Linear
 import paddle.nn.functional as F
 
+
 # 定义一个用于情感分类的网络实例，SentimentClassifier
 class SentimentClassifier(paddle.nn.Layer):
     def __init__(self, hidden_size, vocab_size, class_num=2, num_steps=128, num_layers=1, init_scale=0.1, dropout=None):
@@ -95,6 +96,7 @@ class SentimentClassifier(paddle.nn.Layer):
         # 最终返回预测结果pred，和网络的loss
         return pred, loss
 
+
 def load_imdb(is_training):
     data_set = []
     # 我们把数据依次读取出来，并放到data_set里
@@ -119,7 +121,10 @@ def data_preprocess(corpus):
         data_set.append((sentence, sentence_label))
     return data_set
 
+
 """在经过切词之后，需要构造一个词典，把每个词转化为一个ID，用来训练神经网络"""
+
+
 # 构造词典，统计每个词的频率，并根据频率将每个词转换为一个整数id
 def build_dict(corpus):
     word_freq_dict = dict()
