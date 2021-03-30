@@ -9,7 +9,7 @@ MODEL_NAME = "chinese-electra-small"
 CHECK_POINT_DIR = "test_electra_small_text_cls"
 parser = argparse.ArgumentParser(__doc__)
 parser.add_argument("--num_epoch", type=int, default=3, help="Number of epoches for fine-tuning.")
-parser.add_argument("--use_gpu", type=ast.literal_eval, default=True,
+parser.add_argument("--use_gpu", type=ast.literal_eval, default=False,
                     help="Whether use GPU for finetuning, input should be True or False")
 parser.add_argument("--checkpoint_dir", type=str, default=None, help="Directory to model checkpoint")
 parser.add_argument("--batch_size", type=int, default=32, help="Total examples' number in batch for training.")
@@ -28,7 +28,7 @@ def main():
 
     # Setup feed list for data feeder
     optimizer = paddle.optimizer.Adam(learning_rate=5e-5, parameters=model.parameters())
-    trainer = hub.Trainer(model, optimizer, checkpoint_dir=CHECK_POINT_DIR, use_gpu=True)
+    trainer = hub.Trainer(model, optimizer, checkpoint_dir=CHECK_POINT_DIR, use_gpu=False)
 
     trainer.train(train_dataset, epochs=3, batch_size=32, eval_dataset=dev_dataset)
 
@@ -54,10 +54,10 @@ def test():
         load_checkpoint=load_checkpoint,
         label_map=label_map)
 
-    results = model.predict(data_list, max_seq_len=50, batch_size=1, use_gpu=True)
+    results = model.predict(data_list, max_seq_len=50, batch_size=1)
     acc = 0
     for idx, text in enumerate(data_list):
-        print('Data: {} \t Label: {}'.format(text[0], results[idx]))
+        print('Data: {} \t predict: {} \t Label: {}'.format(text[0], test_label[idx], results[idx]))
         if results[idx] == test_label[idx]:
             acc += 1
 
@@ -76,7 +76,7 @@ def eval():
         load_checkpoint=load_checkpoint,
         label_map=label_map)
 
-    results = model.predict(eval_text, max_seq_len=50, batch_size=1, use_gpu=True)
+    results = model.predict(eval_text, max_seq_len=50, batch_size=1)
     with open("answer.txt", 'w') as f:
         for idx, text in enumerate(eval_text):
             print('Data: {} \t Label: {}'.format(text[0], results[idx]))
